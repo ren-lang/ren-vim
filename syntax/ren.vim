@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Ren
 " Maintainer:   Trymunx <trymunx@gmail.com>
-" Last Change:  2021-04-30
+" Last Change:  2021-08-18
 " Remark:       Still a work in progress.
 
 if !exists("main_syntax")
@@ -13,26 +13,34 @@ if !exists("main_syntax")
 	let main_syntax = 'ren'
 endif
 
-syntax region  renString           start=+"+  skip=+\\\\\|\\"+  end=+"\|$+
-syntax region  renString           start=+'+  skip=+\\\\\|\\'+  end=+'\|$+
-syntax match   renNumber           "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
-syntax match   renFloat            /\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
+syntax region  	renString           start=+"+  skip=+\\\\\|\\"+  end=+"\|$+
+syntax region  	renString           start=+'+  skip=+\\\\\|\\'+  end=+'\|$+
+syntax match   	renNumber           "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+syntax match   	renFloat            /\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
 
-syntax match   renBraces           "[{}\[\]]"
-syntax match   renParens           "[()]"
-syntax match   renOpSymbols        "=\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-=\|::\|++\|%\|^"
-syntax match   renEndColons        "[,]"
-syntax match   renLogicSymbols     "\(&&\)\|\(||\)\|\(==\)"
-syntax match   renFunctionSymbols  "\(|>\)\|\(>>\)\|\(=>\)"
+syntax match   	renBraces           "[{}\[\]]"
+syntax match   	renParens           "[()]"
+syntax match   	renOpSymbols        "\(|>\)\|\(>>\)\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-=\|::\|+\|%\|\^\|\*\|-"
+syntax match   	renFunctionSymbols  "\(=>\)\|=\||"
+syntax match   	renEndColons        "[,]"
+syntax match   	renLogicSymbols     "\(&&\)\|\(||\)\|\(==\)"
 
-syntax keyword renCommentTodo      TODO FIXME XXX TBD OPTIMIZE HACK REVIEW contained
-syntax match   renComment          "\/\/.*" contains=renCommentTodo
+syntax match  	renTemplateDelim    "\${\|}" contained
+syntax region 	renTemplateVar      start=+${+ end=+}+                        contains=renTemplateDelim,renNumber,renFloat,renString,renOpSymbols,renLogicSymbols,renFunctionSymbols,renBraces,renParens keepend
+syntax region 	renTemplateString   start=+`+  skip=+\\\(`\|$\)+  end=+`+     contains=renTemplateVar,renSpecial keepend
 
-syntax keyword renVisibility       import as exposing pub
-syntax keyword renIdentifier       let where and fun
-syntax keyword renOperator         delete new instanceof typeof
-syntax keyword renBoolean          true false
-syntax keyword renConditional      if else then
+syntax keyword	renEnum							enum
+syntax region		renEnumVariant			start=+#+	end=+ +
+
+syntax keyword	renCommentTodo      TODO FIXME XXX TBD OPTIMIZE HACK REVIEW contained
+syntax match  	renComment          "\/\/.*" contains=renCommentTodo
+
+syntax keyword 	renVisibility       import as exposing pub
+syntax keyword 	renIdentifier       let and fun
+syntax keyword 	renOperator         delete new instanceof typeof
+syntax keyword 	renBoolean          true false
+syntax keyword 	renConditional      if else then when is
+syntax keyword 	renReturn						ret
 
 hi link renCommentTodo      Todo
 hi link renComment          Comment
@@ -42,11 +50,19 @@ hi link renIdentifier       Identifier
 hi link renOperator         Operator
 hi link renBoolean          Boolean
 hi link renConditional      Conditional
+hi link renReturn						Type
 
 hi link renString           String
 hi link renString           String
 hi link renNumber           Number
 hi link renFloat            Number
+
+hi link renTemplateString		String
+hi link renTemplateDelim		Delimiter
+hi link renTemplateVar			Operator
+
+hi link renEnum							Identifier
+hi link renEnumVariant			Special
 
 hi link renFuncKeyword      Function
 hi link renFuncExp          Title
@@ -58,7 +74,7 @@ hi link renFunctionKey      Function
 
 hi link renBraces           Function
 hi link renParens           Operator
-hi link renOpSymbols        Operator
+hi link renOpSymbols        Function
 hi link renEndColons        Operator
 hi link renLogicSymbols     Boolean
 hi link renFunctionSymbols  Function
@@ -67,3 +83,4 @@ let b:current_syntax = "ren"
 if main_syntax == 'ren'
 	unlet main_syntax
 endif
+
