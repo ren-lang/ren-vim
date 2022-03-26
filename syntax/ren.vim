@@ -30,9 +30,9 @@ syntax region 	renTemplateVar      start=+${+ end=+}+                        con
 syntax region 	renTemplateString   start=+`+  skip=+\\\(`\|$\)+  end=+`+     contains=renTemplateVar,renSpecial keepend
 
 syntax keyword	renEnum							enum
-syntax region		renEnumVariant			start=+#+	end=+ +
+syntax region		renEnumVariant			start=+#+	end=+\W+
 
-syntax region		renTypePattern			start=+@+ end=+ +
+syntax region		renTypePattern			start=+@+ end=+\W+
 
 syntax keyword	renCommentTodo      TODO FIXME XXX TBD OPTIMIZE HACK REVIEW contained
 syntax match  	renComment          "\/\/.*" contains=renCommentTodo
