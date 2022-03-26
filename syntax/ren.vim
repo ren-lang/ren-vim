@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Ren
 " Maintainer:   Trymunx <trymunx@gmail.com>
-" Last Change:  2021-08-18
+" Last Change:  2022-03-26
 " Remark:       Still a work in progress.
 
 if !exists("main_syntax")
@@ -35,11 +35,10 @@ syntax region		renEnumVariant			start=+#+	end=+ +
 syntax keyword	renCommentTodo      TODO FIXME XXX TBD OPTIMIZE HACK REVIEW contained
 syntax match  	renComment          "\/\/.*" contains=renCommentTodo
 
-syntax keyword 	renVisibility       import as exposing pub
-syntax keyword 	renIdentifier       let and fun
-syntax keyword 	renOperator         delete new instanceof typeof
+syntax keyword 	renVisibility       import as exposing pub ext pkg
+syntax keyword 	renIdentifier       let run type
 syntax keyword 	renBoolean          true false
-syntax keyword 	renConditional      if else then when is
+syntax keyword 	renConditional      if else then where is
 syntax keyword 	renReturn						ret
 
 hi link renCommentTodo      Todo
