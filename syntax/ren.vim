@@ -32,11 +32,14 @@ syntax region 	renTemplateString   start=+`+  skip=+\\\(`\|$\)+  end=+`+     con
 syntax keyword	renEnum							enum
 syntax region		renEnumVariant			start=+#+	end=+ +
 
+syntax region		renTypePattern			start=+@+ end=+ +
+
 syntax keyword	renCommentTodo      TODO FIXME XXX TBD OPTIMIZE HACK REVIEW contained
 syntax match  	renComment          "\/\/.*" contains=renCommentTodo
 
 syntax keyword 	renVisibility       import as exposing pub ext pkg
-syntax keyword 	renIdentifier       let run type
+syntax keyword 	renIdentifier       let run
+syntax keyword  renType             type
 syntax keyword 	renBoolean          true false
 syntax keyword 	renConditional      if else then where is
 syntax keyword 	renReturn						ret
@@ -62,6 +65,9 @@ hi link renTemplateVar			Operator
 
 hi link renEnum							Identifier
 hi link renEnumVariant			Special
+
+hi link renType             Type
+hi link renTypePattern      Type
 
 hi link renFuncKeyword      Function
 hi link renFuncExp          Title
